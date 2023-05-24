@@ -29,9 +29,16 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
 
+  // Implicit declaration using var - We do not specify the data type . Dart assume/imply based on the initial value
+  // var a = 170 -> a will be implied as integer
+  // var a = 170.0 -> a will be implied as double
+
+  // Explicit declaration using the datatype - String, double, int, List, Map, boolen
   var _heightSliderValue = 170.0;
-  var _weightSliderValue = 70.0;
+  double _weightSliderValue = 70; // Using Explicit declaration, I declare this value as double..
+
   var _message = "";
+  // I can also declare String _message="";
   var _bmi = 0;
 
   @override
@@ -46,12 +53,12 @@ class _HomePageState extends State<HomePage> {
           child: Center(
             child: Column(
               children: [
-                 Text("BMI Calculator", style: TextStyle(color: Colors.red, fontSize: 32),),
-                SizedBox(height: 10,),
-                Text("We care about our health"),
-                SizedBox(height: 10,),
+                const Text("BMI Calculator", style: TextStyle(color: Colors.red, fontSize: 32),),
+                const SizedBox(height: 10,),
+                const Text("We care about our health"),
+                const SizedBox(height: 10,),
                 Image.asset("assets/bmi.png"),
-                SizedBox(height: 10,),
+                const SizedBox(height: 10,),
                 Text("Height ${_heightSliderValue.round().toString()} cm"),
                 Slider(
                   value: _heightSliderValue,
@@ -61,10 +68,11 @@ class _HomePageState extends State<HomePage> {
                   onChanged: (double value) {
                     setState(() {
                       _heightSliderValue = value;
+                      _bmi = 0;
                     });
                   },
                 ),
-                SizedBox(height: 10,),
+                const SizedBox(height: 10,),
                 Text("Weight: ${_weightSliderValue.round().toString()} kg"),
                 Slider(
                   value: _weightSliderValue,
@@ -74,14 +82,20 @@ class _HomePageState extends State<HomePage> {
                   onChanged: (double value) {
                     setState(() {
                       _weightSliderValue = value;
+                      _bmi = 0;
                     });
                   },
                 ),
 
-                SizedBox(height: 10,),
-                //  condition ? if yes : otherwise / if not ...
-                _bmi != 0 ? Text("Your BMI is ${_bmi}. ${_message}") : SizedBox(),
-                SizedBox(height: 10,),
+                const SizedBox(height: 10,),
+                //  condition ? if yes : otherwise / if not ... (Conditional Rendering) -> If else to show UI
+
+                // Interpolation " ${} " -> Bring out value from a variable
+                // If you call a method after the variable, you use ${} , eg: ${_bmi.round()} // 3.145 -> 3 (round)
+                // If you do not call a method, after the variable you use $ only .. eg: $_bmi
+
+                _bmi != 0 ? Text("Your BMI is $_bmi. $_message") : const SizedBox(),
+                const SizedBox(height: 10,),
                 TextButton.icon(onPressed: (){
 
                   ///  bmi = weight / (height in metre) x (height in metre)
@@ -109,8 +123,8 @@ class _HomePageState extends State<HomePage> {
                     _message = messageTemp;
                   });
 
-                }, icon: Icon(Icons.favorite),
-                    label: Text("Calculate BMI"))
+                }, icon: const Icon(Icons.favorite),
+                    label: const Text("Calculate BMI"))
               ],
             ),
           ),
